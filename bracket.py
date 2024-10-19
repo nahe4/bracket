@@ -160,24 +160,23 @@ class Page2(ttk.Frame):
         self.back=ttk.Button(self.menu, text='back', command=lambda: controller.showframe('MainPage')).pack()
         self.graph=tkinter.Frame(self.f, background='red')
         self.graph.pack()
-        l = {1:{1:['seed1','seed16'], 2:['seed2','seed15'], 3:['seed3','seed14'], 4:['seed4','seed13'], 5:['seed5','seed12'],
-             6:['seed6','seed11'], 7:['seed7','seed10'], 8:['seed8','seed9']}}
-        self.c=UI_items.Graphic(self.graph, 4) #create a graphical bracket structure with space for 2^n teams
-        self.c['scrollregion'] = self.c.bbox("all")
-        self.c.grid(column=0, row=0)
-        self.vscroll=UI_items.Scrollbar(self.graph, tkinter.RIGHT, self.c.yview)
-        self.vscroll.grid(column=1, row=0)
-        self.vscroll.lift()
-        self.hscroll=UI_items.Scrollbar(self.graph, tkinter.BOTTOM, self.c.xview)
-        self.c['xscrollcommand'] = self.hscroll.set
-        self.c['yscrollcommand'] = self.vscroll.set
+
         def start():
-            l = {1: {1: ['seed1', 'seed16'], 2: ['seed2', 'seed15'], 3: ['seed3', 'seed14'], 4: ['seed4', 'seed13'],
-                     5: ['seed5', 'seed12'],
-                     6: ['seed6', 'seed11'], 7: ['seed7', 'seed10'], 8: ['seed8', 'seed9']}}
-            for q in self.c.game_instances.values():
-                self.c.delete(q.id)
-            return self.c.play(size=4, round=1, teams=l)
+            l = {1: {1: ['seed1', 'seed8'], 2: ['seed2', 'seed7'], 3: ['seed3', 'seed6'], 4: ['seed4', 'seed5']}}
+
+            self.c = UI_items.Graphic(self.graph, 3)  # create a graphical bracket structure with space for 2^n teams
+            self.c['scrollregion'] = self.c.bbox("all")
+            self.c.grid(column=0, row=0)
+            self.vscroll = UI_items.Scrollbar(self.graph, tkinter.RIGHT, self.c.yview)
+            self.vscroll.grid(column=1, row=0)
+            self.vscroll.lift()
+            self.hscroll = UI_items.Scrollbar(self.graph, tkinter.BOTTOM, self.c.xview)
+            self.c['xscrollcommand'] = self.hscroll.set
+            self.c['yscrollcommand'] = self.vscroll.set
+
+            #for q in self.c.game_instances.values():
+                #self.c.delete(q.id)
+            return self.c.play(size=3, round=1, teams=l)
         self.start = ttk.Button(self, text='start', command=start)
         self.start.pack()
         #return

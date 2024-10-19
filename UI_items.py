@@ -143,7 +143,7 @@ class ButtonFrame(tkinter.Frame):
         if final==False:
             parent.create_window(x, y, window=self)
         else:
-            parent.create_window(x-50, y, window=self)
+            parent.create_window(x-50, y+30, window=self)
         self.b1 = ttk.Button(self, text=team1, command=lambda: self.winner.set(team1))
         self.b2 = ttk.Button(self, text=team2, command=lambda: self.winner.set(team2))
         self.cock = tkinter.Label(self, textvariable=self.winner)
@@ -152,9 +152,9 @@ class ButtonFrame(tkinter.Frame):
             self.cock.pack(pady=30*(2**(round-1))-25)
             self.b2.pack()
         else:
+            self.cock.pack(side='bottom', pady=20)
             self.b1.pack(side='left')
             self.b2.pack(side='left')
-            self.cock.pack(side='top', pady=30)
 
     #def get(self):
         #if self.winner:
