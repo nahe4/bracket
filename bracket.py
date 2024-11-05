@@ -1,7 +1,5 @@
 import tkinter
 from tkinter import ttk
-#from tkinter import filedialog
-#import csv
 import functions
 import structures
 import UI_items
@@ -15,7 +13,6 @@ class app(tkinter.Tk):
         self.window.grid_rowconfigure(0, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
         print("11", self)
-        #print("wwww",window)
 
         self.frames = {} #store names of page frames
 
@@ -24,7 +21,6 @@ class app(tkinter.Tk):
             page = frm(parent=self.window, controller=self)
             self.frames[pagename] = page #add frames and their respective page names to a dictionary
             print("frm", page)
-            #print('frarte', page.parent)
             page.grid(row=0, column=0, sticky="nsew")
 
 
@@ -40,8 +36,6 @@ class MainPage(ttk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.m = ttk.Frame(self, height=600, width=600)
-        print('parent', parent)
-        print('fsafasf',self.m)
         self.m.grid()
         self.m.controller = controller
 
@@ -49,22 +43,13 @@ class MainPage(ttk.Frame):
         mtest.pack()
 
         label1 = ttk.Label(self.m, text='label', borderwidth=10)
-        label1.pack(side="top", fill="x")  # grid(column=0, row=0)
-
-        #yesnoseed.pack()
-
-        # def initselect(frame):
-        # selectframe=frame(MainPage)
+        label1.pack(side="top", fill="x")
         label2 = ttk.Label(self.m, text='entry', borderwidth=10)
         label2.pack(side="top", fill="x", pady=10)  # grid(column=1, row=0)
-
 
         start = ttk.Button(self.m, text='next', command=lambda: controller.showframe('Page2'))
         start.pack()
 
-
-
-    # bracket format variables
 
 class MenuFrame(ttk.Frame):
     def __init__(self, parent, controller):
@@ -90,11 +75,8 @@ class MenuFrame(ttk.Frame):
 
         for frm in (UnseededSelect, SeededSelect):
             pagename = frm.__name__
-            # print('pagename', pagename)
             page = frm(parent=self, controller=parent.controller)
-            # print('page', page)
             self.menuframes[pagename] = page
-            # print('dict', self.frames.items())
             page.grid(row=0, column=0, sticky="nsew")
             # add frames and their respective page names to a dictionary
         
@@ -103,7 +85,6 @@ class MenuFrame(ttk.Frame):
     def showmenu(self, pagename):
         print(self.menuframes.items())
         frame = self.menuframes[pagename]
-        # frame.pack(side="top", fill="both", expand=True)
         frame.tkraise()
         # make a frame visible by raising to the front of the stacking order
 
@@ -115,23 +96,18 @@ class MenuFrame(ttk.Frame):
 class SeededSelect(ttk.Frame):
     def __init__(self, parent, controller):
         print('seededselect')
-        ttk.Frame.__init__(self, parent) #.grid(column=1, row=1)
+        ttk.Frame.__init__(self, parent)
         self.controller=controller
         textentry = tkinter.StringVar()
 
         def getteams():
             self.teams=functions.readfile()
-            print('yay',self.teams)
-        ttk.Entry(self, textvariable=textentry, width=5).pack()  # grid(column=1, row=1)
-        teamimport = ttk.Button(self, text='I', command=getteams).pack()  # grid(column=0, row=1)
-        quitapp = ttk.Button(self, text='2Quit', command=controller.destroy).pack()  # grid(column=2, row=2)
+        ttk.Entry(self, textvariable=textentry, width=5).pack()
+        teamimport = ttk.Button(self, text='I', command=getteams).pack()
+        quitapp = ttk.Button(self, text='2Quit', command=controller.destroy).pack()
         nextpage = ttk.Button(self, text='next',
-                              command=lambda: controller.showframe('Page2')).pack()  # grid(column=1, row=2)
+                              command=lambda: controller.showframe('Page2')).pack()
 
-
-
-        #self.selectstruc = UI_items.Selection(self, ['Binary1Elim', 'Binary2Elim'])
-        #self.selectstruc.pack()
 
 
 class UnseededSelect(ttk.Frame):
@@ -140,14 +116,11 @@ class UnseededSelect(ttk.Frame):
         self.lenteams=1
         ttk.Frame.__init__(self, parent)
         textentry = tkinter.StringVar()
-        ttk.Entry(self, textvariable=textentry, width=5).pack()  # grid(column=1, row=1)
-        #teamimport = ttk.Button(self, text='I', command=functions.readfile).pack()  # grid(column=0, row=1)
-        quitapp = ttk.Button(self, text='1Quit', command=controller.destroy).pack()  # grid(column=2, row=2)
+        ttk.Entry(self, textvariable=textentry, width=5).pack()
+        quitapp = ttk.Button(self, text='1Quit', command=controller.destroy).pack()
         nextpage = ttk.Button(self, text='next',
-                              command=lambda: controller.showframe('Page2')).pack()  # grid(column=1, row=2)
+                              command=lambda: controller.showframe('Page2')).pack()
 
-        #self.selectstruc = UI_items.Selection(self, ['Binary1Elim', 'Binary2Elim'])
-        #self.selectstruc.pack()
 
 class Page2(ttk.Frame):
     def __init__(self, parent, controller):
@@ -174,20 +147,11 @@ class Page2(ttk.Frame):
             self.c['xscrollcommand'] = self.hscroll.set
             self.c['yscrollcommand'] = self.vscroll.set
 
-            #for q in self.c.game_instances.values():
-                #self.c.delete(q.id)
+
             return self.c.play(size=3, round=1, teams=l)
         self.start = ttk.Button(self, text='start', command=start)
         self.start.pack()
-        #return
-        #return
-    #def newround(self):
 
-'''class Canvas(tkinter.Canvas):
-    def __init__(self, parent, controller): 
-        tkinter.Canvas.__init__(self, parent, width=200, height=200, background='white')
-
-        self.create_line(0, 0, 50, 50, fill='blue', width=5)'''
 
 if __name__ == "__main__":
     mainapp = app()

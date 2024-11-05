@@ -10,10 +10,8 @@ class Selection(ttk.Combobox):
         self.curstruc = tkinter.StringVar()
         self.curstruc.set('n')
         ttk.Combobox.__init__(self, parent, state='readonly', textvariable=self.curstruc, values=vals)
-        #curstruc=self.get()
         self.bind('<<ComboboxSelected>>', lambda event: self.value())
     def value(self):
-        #self.curstruc.set(self.get())
         print('v',self.curstruc.get())
         return self.curstruc.get()
 
@@ -72,13 +70,10 @@ class Graphic(tkinter.Canvas):
 
         def nextround():
             out=[]
-            #print(self.game_instances)
             for match in self.game_instances[round].values():
                 if match.winner.get():
                     out.append(match.winner.get())
-                #match.cock.config(text='')
 
-            #print(out)
 
             if len(out)==2**(size-round): #verify user has selected a winner for each game
                 t=1
@@ -96,7 +91,7 @@ class Graphic(tkinter.Canvas):
                 print('tdict',teams)
                 if round < size:
                     for match in self.game_instances[round].values():
-                        match.cock.config(textvariable='')
+                        match.winner_label.config(textvariable='')
                     return self.play(size, round+1, teams)
                 elif round==size:
                     print('ended', self.game_instances)
@@ -106,12 +101,8 @@ class Graphic(tkinter.Canvas):
                     self.winframe.tkraise()
                     self.winning_team=tkinter.Label(self.winframe, text=self.game_instances[round][1].winner.get()+" has won the tournament!", highlightcolor='green')
                     self.winning_team.pack()
-                    #self.reset=ttk.Button(text='reset', command=play(self, parent, ))
                     return self.winning_team
-                    #self.winning_team.tkraise()
-                    #self.winning_team
             else:
-                # return self.play(size, round, teams)
                 print('select all teams')
 
 
@@ -128,7 +119,6 @@ class Graphic(tkinter.Canvas):
         self.create_window(self.width / 2, self.height / 4, window=reset)
         d = tkinter.Button(next, text='reset', command=nextround)
         d.pack()
-    #def reset(self):
 
 
 
@@ -146,26 +136,20 @@ class ButtonFrame(tkinter.Frame):
             parent.create_window(x-50, y+30, window=self)
         self.b1 = ttk.Button(self, text=team1, command=lambda: self.winner.set(team1))
         self.b2 = ttk.Button(self, text=team2, command=lambda: self.winner.set(team2))
-        self.cock = tkinter.Label(self, textvariable=self.winner)
+        self.winner_label = tkinter.Label(self, textvariable=self.winner)
         if final==False:
             self.b1.pack()
-            self.cock.pack(pady=30*(2**(round-1))-25)
+            self.winner_label.pack(pady=30 * (2 ** (round - 1)) - 25)
             self.b2.pack()
         else:
-            self.cock.pack(side='bottom', pady=20)
+            self.winner_label.pack(side='bottom', pady=20)
             self.b1.pack(side='left')
             self.b2.pack(side='left')
 
-    #def get(self):
-        #if self.winner:
-            #return self.winner
+
 class Scrollbar(ttk.Scrollbar):
     def __init__(self, parent, side, command):
         tkinter.Scrollbar.__init__(self, parent, command=command)
-        #self.config()
-        #self.pack(side = side)
-
-
 
 
 
@@ -185,5 +169,4 @@ class Menu(ttk.Frame):
             entry = ttk.Entry(self, width=5)
             entry.pack()
         startbutton=ttk.Button(self, text='start', command=parent.showbracket).pack()
-#class Menu(ttk.Frame):
 
